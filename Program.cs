@@ -1,134 +1,11 @@
-﻿// Program.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CampusLinkApp.Models;
+using CampusLinkApp.Managers;
 
 namespace CampusLinkApp
 {
-    // Person base class demonstrating encapsulation
-    public class Person
-    {
-        private string _name;
-        private string _gender;
-        private int _age;
-
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Name cannot be empty.");
-                _name = value.Trim();
-            }
-        }
-
-        public string Gender
-        {
-            get => _gender;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Gender cannot be empty.");
-                var g = value.Trim();
-                var normalized = char.ToUpper(g[0]) + g.Substring(1).ToLower();
-                if (normalized != "Male" && normalized != "Female")
-                    throw new ArgumentException("Gender must be 'Male' or 'Female'.");
-                _gender = normalized;
-            }
-        }
-
-        public int Age
-        {
-            get => _age;
-            set
-            {
-                if (value <= 0 || value > 120)
-                    throw new ArgumentException("Age must be a positive number (1-120).");
-                _age = value;
-            }
-        }
-
-        public Person() { }
-
-        public Person(string name, string gender, int age)
-        {
-            Name = name;
-            Gender = gender;
-            Age = age;
-        }
-    }
-
-    // Add this constructor to Student class
-    public class Student : Person
-    {
-        public int StudentID { get; set; } // assigned by StudentManager
-
-        public Student() { }
-
-        public Student(string name, string gender, int age)
-            : base(name, gender, age)
-        {
-        }
-
-        public override string ToString()
-        {
-            return $"{Name,-25} {Gender,-6} {Age,3}  {StudentID}";
-        }
-    }
-
-    // Generic interface as required
-    public interface IManageStudents<T>
-    {
-        void Add(T item);
-        void Edit(T item);
-        void Delete(T item);
-        List<T> List();
-    }
-
-    // StudentManager implementing the interface
-    public class StudentManager : IManageStudents<Student>
-    {
-        private readonly List<Student> _students = new List<Student>();
-        private static int _nextId = 1000; // start id (you can change or use GUID)
-
-        public void Add(Student item)
-        {
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            item.StudentID = _nextId++;
-            _students.Add(item);
-        }
-
-        public void Edit(Student item)
-        {
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            var existing = _students.FirstOrDefault(s => s.StudentID == item.StudentID);
-            if (existing == null) throw new KeyNotFoundException($"Student ID {item.StudentID} not found.");
-            existing.Name = item.Name;
-            existing.Gender = item.Gender;
-            existing.Age = item.Age;
-        }
-
-        public void Delete(Student item)
-        {
-            if (item == null) throw new ArgumentNullException(nameof(item));
-            var existing = _students.FirstOrDefault(s => s.StudentID == item.StudentID);
-            if (existing == null) throw new KeyNotFoundException($"Student ID {item.StudentID} not found.");
-            _students.Remove(existing);
-        }
-
-        public List<Student> List()
-        {
-            // return a shallow copy to protect internal list
-            return new List<Student>(_students);
-        }
-
-        public Student GetById(int id) => _students.FirstOrDefault(s => s.StudentID == id);
-
-        public List<Student> SortByName() => _students.OrderBy(s => s.Name).ToList();
-        public List<Student> SortByAge() => _students.OrderBy(s => s.Age).ToList();
-    }
-
     class Program
     {
         static StudentManager manager = new StudentManager();
@@ -274,7 +151,6 @@ namespace CampusLinkApp
                 Console.WriteLine("Invalid choice.");
         }
 
-        // Utilities for reading and validating input
         static string ReadRequired(string prompt)
         {
             while (true)
