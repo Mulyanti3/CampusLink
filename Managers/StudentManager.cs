@@ -41,7 +41,7 @@ namespace CampusLinkApp.Managers
             return new List<Student>(_students);
         }
 
-        public Student GetById(int id) => _students.FirstOrDefault(s => s.StudentID == id);
+        public Student? GetById(int id) => _students.FirstOrDefault(s => s.StudentID == id);
 
         public List<Student> SortByName() => _students.OrderBy(s => s.Name).ToList();
 

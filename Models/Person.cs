@@ -4,8 +4,8 @@ namespace CampusLinkApp.Models
 {
     public class Person
     {
-        private string _name;
-        private string _gender;
+        private string _name = string.Empty;
+        private string _gender = string.Empty;
         private int _age;
 
         public string Name
@@ -40,7 +40,7 @@ namespace CampusLinkApp.Models
             set
             {
                 if (value <= 18 || value > 80)
-                    throw new ArgumentException("Age must be a positive number (18-80).");
+                    throw new ArgumentException("Age must be a positive number (19-80).");
                 _age = value;
             }
         }

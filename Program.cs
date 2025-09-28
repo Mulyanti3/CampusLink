@@ -12,7 +12,7 @@ namespace CampusLinkApp
 
         static void Main()
         {
-            Console.WriteLine("CampusLink - Student Manager");
+            Console.WriteLine(" CampusLink - Student Manager ");
             while (true)
             {
                 ShowMenu();
@@ -57,7 +57,7 @@ namespace CampusLinkApp
 
         static void RegisterStudent()
         {
-            Console.WriteLine("-- Register Student --");
+            Console.WriteLine(" Register Student ");
             var name = ReadRequired("Name: ");
             var gender = ReadGender("Gender (Male/Female): ");
             var age = ReadPositiveInt("Age: ");
@@ -69,7 +69,7 @@ namespace CampusLinkApp
 
         static void ViewRoster(List<Student> students)
         {
-            Console.WriteLine("-- Student Roster --");
+            Console.WriteLine(" Student Roster ");
             if (students == null || !students.Any())
             {
                 Console.WriteLine("No students registered yet.");
@@ -84,7 +84,7 @@ namespace CampusLinkApp
 
         static void EditStudent()
         {
-            Console.WriteLine("-- Edit Student --");
+            Console.WriteLine(" Edit Student ");
             var id = ReadPositiveInt("Enter StudentID to edit: ");
             var existing = manager.GetById(id);
             if (existing == null)
@@ -115,7 +115,7 @@ namespace CampusLinkApp
 
         static void DeleteStudent()
         {
-            Console.WriteLine("-- Delete Student --");
+            Console.WriteLine(" Delete Student ");
             var id = ReadPositiveInt("Enter StudentID to delete: ");
             var existing = manager.GetById(id);
             if (existing == null)
@@ -138,7 +138,7 @@ namespace CampusLinkApp
 
         static void SortRoster()
         {
-            Console.WriteLine("-- Sort Roster --");
+            Console.WriteLine(" Sort Roster ");
             Console.WriteLine("1) By Name");
             Console.WriteLine("2) By Age");
             Console.Write("Choose: ");
@@ -186,14 +186,14 @@ namespace CampusLinkApp
             }
         }
 
-        static string ReadOptional(string prompt)
+        static string? ReadOptional(string prompt)
         {
             Console.Write(prompt);
             var input = Console.ReadLine();
             return string.IsNullOrWhiteSpace(input) ? null : input.Trim();
         }
 
-        static string ReadOptionalGender(string prompt)
+        static string? ReadOptionalGender(string prompt)
         {
             Console.Write(prompt);
             var input = Console.ReadLine();
